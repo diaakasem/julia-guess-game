@@ -13,23 +13,23 @@ end
 function message(msg)
     clear()
     printable = uppercase(msg)
-    println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-    println("+                                                                               ")
-    println("+             $printable")
-    println("+                                                                               ")
-    println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    println("+" ^ 80)
+    println("+")
+    println("+   $printable")
+    println("+")
+    println("+" ^ 80)
     run(`say $msg`)
     sleep(WAIT)
-    clear()
 end
 
 
 function getUserName()
-    println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-    println("+                                                                               ")
-    println("+                   WHAT IS YOUR NAME ?                                ")
-    println("+  ( 1- Mariam ) ( 2- Malak ) ( 3- Menna ) ( 4- Diaa ) ( 5- Nawal )             ")
-    println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    clear()
+    println("+" ^ 80)
+    println("+")
+    println("+  WHAT IS YOUR NAME ?")
+    println("+  ( 1- Mariam ) ( 2- Malak ) ( 3- Menna ) ( 4- Diaa ) ( 5- Nawal ) ")
+    println("+" ^ 80)
     run(`say What is your name?`)
     name = readline()
     if name == "1" || lowercase(name) == "mariam"
@@ -43,7 +43,7 @@ function getUserName()
     elseif name == "5" || lowercase(name) == "nawal"
         return "nawal"
     else
-        return getUserName()
+        return lowercase(name)
     end
 end
 
@@ -62,8 +62,7 @@ name = getUserName()
 welcome(name)
 message("I will think of a number between 1 and $LIMIT and you have $TRIALS trials to guess it.")
 guessedNumber = rand(1:LIMIT)
-message("ok, i have a number in my mind")
-message("what do you think the number is ?")
+message("ok, i have a number in my mind, what do you think the number is ?")
 
 global answers = []
 
@@ -89,8 +88,10 @@ function main(trials, lastNum)
         if trials > 2
             return ""
         end
-        if trials-1 > 0
+        if trials-1 > 1
             return "[ $(trials-1) more times to go. ]"
+        elseif trials-1 > 0
+            return "[ $(trials-1) more time to go. ]"
         else
             return "[ GAME OVER ]"
         end
@@ -103,7 +104,7 @@ function main(trials, lastNum)
         message("No, the number in my mind is bigger than $(num). $(timesToGo(trials))")
         main(trials - 1, num)
     else
-        message("Excellent! you win $name in iteration number $trial . woo hoo !!")
+        message("Excellent! you win $name in iteration number $(TRIALS - trials) . woo hoo !!")
         return
     end
 end
